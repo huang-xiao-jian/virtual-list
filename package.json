@@ -1,0 +1,112 @@
+{
+  "name": "vanillajs",
+  "version": "0.2.0",
+  "description": "NPM browser compatible package.",
+  "module": "es/index.js",
+  "main": "bundle/index.common.js",
+  "typings": "native/index.d.ts",
+  "files": [
+    "es",
+    "lib",
+    "native"
+  ],
+  "scripts": {
+    "prepublishOnly": "npm-run-all -s clean compile",
+    "dev": "NODE_ENV=development webpack-dev-server --hot --inline",
+    "clean": "rm -rf native es lib",
+    "compile": "npm-run-all -s compile:*",
+    "compile:native": "tsc --declaration --emitDeclarationOnly --outDir native",
+    "compile:esm": "babel src --source-maps --out-dir es --extensions '.js,.ts'",
+    "compile:cjs": "babel src --source-maps --out-dir lib --extensions '.js,.ts' --plugins=@babel/plugin-transform-modules-commonjs",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huang-xiao-jian/virtual-list.git"
+  },
+  "keywords": [
+    "typescript",
+    "package"
+  ],
+  "author": "huang.jian <hjj491229492@hotmail.com>",
+  "contributors": [
+    {
+      "name": "huang.jian",
+      "email": "hjj491229492@hotmail.com"
+    },
+    {
+      "name": "yang.yuncai",
+      "email": "383235388@qq.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huang-xiao-jian/virtual-list/issues"
+  },
+  "homepage": "https://github.com/huang-xiao-jian/virtual-list#readme",
+  "dependencies": {
+    "@babel/runtime-corejs3": "^7.5.5",
+    "debug": "^4.1.1",
+    "faker": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.1.0",
+    "@babel/plugin-transform-regenerator": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-conventional": "^8.0.0",
+    "@types/faker": "^4.1.12",
+    "@types/jest": "^25.1.2",
+    "@types/node": "^14.0.0",
+    "autoprefixer": "^9.3.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "babel-loader": "^8.0.4",
+    "case-sensitive-paths-webpack-plugin": "^2.1.2",
+    "coveralls": "^3.0.2",
+    "css-loader": "^3.0.0",
+    "cz-conventional-changelog": "3.1.1",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "file-loader": "^6.0.0",
+    "fork-ts-checker-webpack-plugin": "^4.0.1",
+    "html-webpack-plugin": "^4.0.2",
+    "husky": "^4.0.2",
+    "jest": "^24.1.0",
+    "npm-run-all": "^4.0.2",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^2.0.0",
+    "pretty-quick": "^2.0.0",
+    "progress-bar-webpack-plugin": "^2.1.0",
+    "style-loader": "^1.0.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.4",
+    "url-loader": "^4.0.0",
+    "webpack": "^4.23.1",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged",
+      "pre-push": "npm test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

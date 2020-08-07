@@ -1,0 +1,9 @@
+# Browsers that we support
+
+# common scenes
+>1%
+last 4 versions
+Firefox ESR
+
+# React doesn't support IE8 anyway
+not ie <= 9
