@@ -4,7 +4,8 @@
  */
 
 // internal
-import { FixedRecords, renderItem, patchItem } from './constant';
+import { FixedRecords } from './constant';
+import { renderItem } from '../renderer';
 
 // scope
 const buffer = 3;
@@ -36,7 +37,7 @@ const observeCallback: IntersectionObserverCallback = (entries, observer) => {
 
     console.log('direction :>> ', direction);
 
-    // 从下至上离开观察区域
+    // 从下至上离开观察区域，尾部插入节点，头部回收节点
     if (direction === 'BTA') {
       // 确认后续存在条目
       if (tail < lastIndex) {
@@ -44,24 +45,35 @@ const observeCallback: IntersectionObserverCallback = (entries, observer) => {
         head += 1;
         tail += 1;
 
-        // 回收头部节点到尾部
-        container.appendChild(
-          patchItem(FixedRecords[tail], container.firstChild as HTMLElement)
-        );
+        const element = renderItem(FixedRecords[tail]);
+        // 尾部插入新节点
+        container.appendChild(element);
+        // 新节点纳入观察
+        observer.observe(element);
+
+        // 取消观察待删除节点
+        observer.unobserve(entry.target);
+        // 删除旧节点
+        container.removeChild(entry.target);
       }
     }
-    // 从上至下离开观察区域
+    // 从上至下离开观察区域，头部插入节点，尾部回收节点
     else {
       if (head > 0) {
         // 更新数据范围标记
         head -= 1;
         tail -= 1;
 
-        // 回收尾部节点到头部
-        container.insertBefore(
-          patchItem(FixedRecords[head], container.lastChild as HTMLElement),
-          container.firstChild
-        );
+        const element = renderItem(FixedRecords[head]);
+        // 尾部插入新节点
+        container.insertBefore(element, container.firstChild);
+        // 新节点纳入观察
+        observer.observe(element);
+
+        // 取消观察待删除节点
+        observer.unobserve(entry.target);
+        // 删除旧节点
+        container.removeChild(entry.target);
       }
     }
 

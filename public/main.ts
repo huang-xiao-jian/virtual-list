@@ -3,6 +3,6 @@
  * @author - huang.jian <hjj491229492@hotmail.com>
  */
 
-import { bootstrap } from './fixed';
+import { bootstrap } from './fixed/fixed';
 
 bootstrap();
