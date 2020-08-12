@@ -1,25 +1,14 @@
 {
-  "name": "vanillajs",
+  "name": "virtual-list",
   "version": "0.2.0",
   "description": "NPM browser compatible package.",
-  "module": "es/index.js",
-  "main": "bundle/index.common.js",
-  "typings": "native/index.d.ts",
   "files": [
     "es",
     "lib",
     "native"
   ],
   "scripts": {
-    "prepublishOnly": "npm-run-all -s clean compile",
-    "dev": "NODE_ENV=development webpack-dev-server --hot --inline",
-    "clean": "rm -rf native es lib",
-    "compile": "npm-run-all -s compile:*",
-    "compile:native": "tsc --declaration --emitDeclarationOnly --outDir native",
-    "compile:esm": "babel src --source-maps --out-dir es --extensions '.js,.ts'",
-    "compile:cjs": "babel src --source-maps --out-dir lib --extensions '.js,.ts' --plugins=@babel/plugin-transform-modules-commonjs",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "dev": "NODE_ENV=development webpack-dev-server --hot --inline"
   },
   "repository": {
     "type": "git",
